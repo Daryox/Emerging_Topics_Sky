@@ -103,11 +103,3 @@ research/            Literature and context notes
 report/              Report outline
 presentation/        Slide outline
 ```
-
-## Team
-
-7 participants: 3 with Claude Code (data pipeline, features, ML/geospatial), 4 handling research, validation, report, and presentation.
-
-## License
-
-Academic project - not for commercial use.
