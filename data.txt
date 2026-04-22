@@ -1,0 +1,52 @@
+DATA DOWNLOAD INSTRUCTIONS
+==========================
+
+The project uses three data sources. Two are fetched automatically by the
+notebook. One requires a manual download.
+
+
+1. EUROCONTROL IFR TRAFFIC (manual download required)
+------------------------------------------------------
+File needed: Airport_Traffic.xlsx
+Place it in: the project root directory (same level as this file)
+
+Steps:
+  1. Go to the Eurocontrol Performance Review Unit data portal:
+     https://www.eurocontrol.int/performance/data/download/xls/Airport_Traffic.xlsx
+  2. Download the file Airport_Traffic.xlsx
+  3. Place it in the project root directory
+
+The notebook filters this file for ICAO code LEMD (Madrid-Barajas) and uses
+columns FLT_DATE, FLT_DEP_1, FLT_ARR_1, FLT_TOT_1 (NM daily movements).
+The dataset covers January 2017 to February 2026 (3,346 records for LEMD).
+
+
+2. OPEN-METEO WEATHER (automatic, no download needed)
+------------------------------------------------------
+The notebook fetches this automatically via the Open-Meteo Archive API.
+No API key required. Data is cached to:
+  data/raw/weather/weather_daily_LEMD_eurocontrol.parquet
+
+If the cache exists the notebook skips the API call. To re-fetch, delete
+the cache file and re-run the notebook.
+
+Variables fetched (hourly, aggregated to daily):
+  temperature_2m, relative_humidity_2m, precipitation, rain,
+  weather_code, surface_pressure, wind_speed_10m,
+  wind_direction_10m, wind_gusts_10m, cloud_cover
+
+
+3. NAGER.DATE SPANISH HOLIDAYS (automatic, no download needed)
+--------------------------------------------------------------
+The notebook fetches this automatically via the Nager.Date public API.
+No API key required. Results are cached per year to:
+  data/raw/holidays/spain_holidays_<year>.json
+
+Covers all years present in the Eurocontrol dataset (2017-2026).
+Only national (global=true) holidays are included: 99 dates total.
+
+
+SUMMARY
+-------
+Action required  : Download Airport_Traffic.xlsx and place in project root
+No action needed : Open-Meteo and Nager.Date are fetched automatically
